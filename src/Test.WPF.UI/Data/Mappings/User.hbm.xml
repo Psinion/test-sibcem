@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Test.WPF.UI"
+                   namespace="Test.WPF.UI.Data.Models">
+  <class name="User" table="Users">
+    <id name="Id" column="ID">
+      <generator class="increment"/>
+    </id>
+    <property name="Login" column="LOGIN"/>
+    <property name="LastName" column="LAST_NAME"/>
+    <property name="FirstName" column="FIRST_NAME"/>
+    <property name="MiddleName" column="MIDDLE_NAME"/>
+  </class>
+</hibernate-mapping>
