@@ -1,0 +1,85 @@
+﻿<Window x:Class="Test.WPF.UI.Views.Windows.UserEditorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:Test.WPF.UI.ViewModels"
+        xmlns:local="clr-namespace:Test.WPF.UI.Views.Windows"
+        mc:Ignorable="d"
+        FontSize="14"
+        WindowStartupLocation="CenterOwner"
+        Title="{Binding Title}" Height="450" Width="400">
+    <Window.DataContext>
+        <vm:UserEditorViewModel/>
+    </Window.DataContext>
+    <DockPanel>
+        <UniformGrid DockPanel.Dock="Bottom" Rows="1" HorizontalAlignment="Left" Margin="5">
+            <UniformGrid.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Margin" Value="3"></Setter>
+                    <Setter Property="Padding" Value="15, 5"></Setter>
+                </Style>
+            </UniformGrid.Resources>
+
+            <Button Content="Принять" Command="{Binding ProceedCommand}"></Button>
+            <Button Content="Отмена" Command="{Binding CancelCommand}"
+                    IsCancel="True"></Button>
+        </UniformGrid>
+        <StackPanel Orientation="Vertical" Margin="5"
+                    Grid.IsSharedSizeScope="True">
+            <StackPanel.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Margin" Value="5, 0"/>
+                    <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+                </Style>
+            </StackPanel.Resources>
+
+            <!-- LastName -->
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="Фамилия:"/>
+                <TextBox Grid.Column="1" Text="{Binding LastName}"/>
+            </Grid>
+
+            <!-- FirstName -->
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="Имя:"/>
+                <TextBox Grid.Column="1" Text="{Binding FirstName}"/>
+            </Grid>
+
+
+            <!-- MiddleName -->
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="Отчество:"/>
+                <TextBox Grid.Column="1" Text="{Binding MiddleName}"/>
+            </Grid>
+
+            <!-- Login -->
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="Логин:"/>
+                <TextBox Grid.Column="1" Text="{Binding Login}"/>
+            </Grid>
+
+        </StackPanel>
+
+    </DockPanel>
+</Window>

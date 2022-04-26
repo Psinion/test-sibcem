@@ -41,9 +41,9 @@ namespace Test.WPF.UI.Data.Repositories
             Session.SaveOrUpdate(item);
         }
 
-        public void Delete(int id)
+        public void Delete(T item)
         {
-            Session.Delete(id);
+            Session.Delete(item);
         }
 
         #endregion

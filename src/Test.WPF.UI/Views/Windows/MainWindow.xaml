@@ -3,9 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:Test.WPF.UI.ViewModels"
         xmlns:local="clr-namespace:Test.WPF.UI"
         mc:Ignorable="d"
+        FontSize="14"
+        WindowStartupLocation="CenterScreen"
         Title="MainWindow" Height="600" Width="800">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -15,7 +21,8 @@
         <StackPanel Grid.Column="0" Orientation="Vertical">
             <TextBlock Text="Пользователи:"></TextBlock>
             <DataGrid Height="350" AutoGenerateColumns="False" IsReadOnly="True"
-                      ItemsSource="{Binding Users}">
+                      ItemsSource="{Binding Users}"
+                      SelectedItem="{Binding SelectedUser}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}"/>
                     <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}"/>
@@ -23,9 +30,14 @@
                     <DataGridTextColumn Header="Логин" Binding="{Binding Login}"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button Content="Добавить"></Button>
-            <Button Content="Изменить"></Button>
-            <Button Content="Удалить"></Button>
+            <Button Content="Добавить" 
+                    Command="{Binding AddUserCommand}"/>
+            <Button Content="Изменить" 
+                    Command="{Binding ChangeUserCommand}" 
+                    CommandParameter="{Binding SelectedUser}"/>
+            <Button Content="Удалить" 
+                    Command="{Binding RemoveUserCommand}" 
+                    CommandParameter="{Binding SelectedUser}"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Orientation="Vertical">

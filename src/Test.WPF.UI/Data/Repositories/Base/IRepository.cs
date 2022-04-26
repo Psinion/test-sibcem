@@ -12,6 +12,6 @@ namespace Test.WPF.UI.Data.Repositories.Base
 
         void Save(T item);
 
-        void Delete(int id);
+        void Delete(T item);
     }
 }
