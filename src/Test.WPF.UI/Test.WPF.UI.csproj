@@ -81,11 +81,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Data\Models\Base\Entity.cs" />
+    <Compile Include="Data\Models\Base\IEntity.cs" />
     <Compile Include="Data\Repositories\Base\IRepository.cs" />
     <Compile Include="Data\Repositories\Base\IUnitOfWork.cs" />
     <Compile Include="Data\Repositories\Base\IUsersRepository.cs" />
+    <Compile Include="Data\Repositories\UnitOfWork.cs" />
     <Compile Include="Data\Repositories\Repository.cs" />
     <Compile Include="Data\NHibernateHelper.cs" />
+    <Compile Include="Data\Repositories\UsersRepository.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -129,5 +133,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

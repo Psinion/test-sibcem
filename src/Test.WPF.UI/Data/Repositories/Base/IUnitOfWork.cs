@@ -1,11 +1,16 @@
 ﻿using System;
+using NHibernate;
 
 namespace Test.WPF.UI.Data.Repositories.Base
 {
     public interface IUnitOfWork : IDisposable
     {
-        IUsersRepository Users { get; }
+        ISession Session { get; }
 
-        int SaveChanges();
+        void BeginTransaction();
+
+        void CommitTransaction();
+
+        void RollbackTransaction();
     }
 }

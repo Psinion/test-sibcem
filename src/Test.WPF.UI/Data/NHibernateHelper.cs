@@ -1,64 +1,31 @@
 ﻿using System;
 using System.Data;
+using System.Runtime.CompilerServices;
 using NHibernate;
 using NHibernate.Cfg;
 using Test.WPF.UI.Data.Models;
 
 namespace Test.WPF.UI.Data
 {
-    public class NHibernateHelper : IDisposable
+    public static class NHibernateHelper
     {
-        private readonly ISessionFactory sessionFactory;
-        private ISession session;
-        private ITransaction transaction;
+        private static Configuration configuration;
+        private static ISessionFactory sessionFactory;
 
-        public static Configuration Configuration { get; set; }
-
-        public ISession CurrentSession
+        public static ISessionFactory SessionFactory
         {
-            get
-            {
-                if (session != null)
-                {
-                    return session;
-                }
-
-                session = sessionFactory.OpenSession();
-                transaction = session.BeginTransaction();
-
-                return session;
-            }
+            get => sessionFactory;
         }
 
-        public NHibernateHelper()
+        public static ISession OpenSession()
         {
-            sessionFactory = Configuration.BuildSessionFactory();
+            return sessionFactory.OpenSession();
         }
 
-        ~NHibernateHelper()
+        public static void Configure(Configuration conf)
         {
-            Dispose();
-        }
-
-        public void PerformCommit()
-        {
-            try
-            {
-                transaction.Commit();
-            }
-            catch (Exception ex)
-            {
-                transaction.Rollback();
-                throw;
-            }
-        }
-
-        public void Dispose()
-        {
-            if (!sessionFactory.IsClosed)
-            {
-                sessionFactory.Close();
-            }
+            configuration = conf;
+            sessionFactory = conf.BuildSessionFactory();
         }
     }
 }

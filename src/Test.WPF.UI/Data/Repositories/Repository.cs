@@ -1,59 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using NHibernate;
 using NHibernate.Event.Default;
-using Test.WPF.UI.Data.Models;
+using NHibernate.Linq;
+using Test.WPF.UI.Data.Models.Base;
 using Test.WPF.UI.Data.Repositories.Base;
 
 namespace Test.WPF.UI.Data.Repositories
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : class, IEntity
     {
-        #region Fields
+        protected IUnitOfWork UnitOfWork;
 
-        protected readonly NHibernateHelper Provider;
+        public ISession Session => UnitOfWork.Session;
 
-        #endregion
+        #region Constructors
 
-        #region Constructor
-
-        public Repository(NHibernateHelper provider)
+        public Repository(UnitOfWork unitOfWork)
         {
-            this.Provider = provider;
+            UnitOfWork = unitOfWork;
         }
 
         #endregion
 
+        #region Public Methods
+
         public T Get(int id)
         {
-            throw new NotImplementedException();
+            return Session.Get<T>(id);
         }
 
         public IEnumerable<T> GetAll()
         {
-            throw new NotImplementedException();
+            return Session.Query<T>().ToList();
         }
 
-        public void Add(T item)
+        public void Save(T item)
         {
-            //User user = new User()
-            //    {FirstName = "Иван", LastName = "Сидоров", MiddleName = "Иванович", Login = "Sidorov"};
-
-            //Provider.CurrentSession.Save(user);
-            //Provider.PerformCommit();
-
-            throw new NotImplementedException();
+            Session.SaveOrUpdate(item);
         }
 
-        public void Update(T item)
+        public void Delete(int id)
         {
-            throw new NotImplementedException();
+            Session.Delete(id);
         }
 
-        public void Remove(int id)
-        {
-            throw new NotImplementedException();
-        }
-
+        #endregion
     }
 }

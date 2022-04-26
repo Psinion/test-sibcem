@@ -19,14 +19,12 @@ namespace Test.WPF.UI
         {
             InitializeComponent();
 
-            NHibernateHelper.Configuration = new Configuration()
+            Configuration configuration = new Configuration()
                     .Configure()
                     .AddAssembly(typeof(User).Assembly)
                 ;
 
-            Repository<User> rep = new Repository<User>(new NHibernateHelper());
-
-            rep.Add(null);
+            NHibernateHelper.Configure(configuration);
         }
     }
 }

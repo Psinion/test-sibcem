@@ -1,17 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Test.WPF.UI.Data.Models.Base;
 
 namespace Test.WPF.UI.Data.Repositories.Base
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<T> where T : class, IEntity
     {
         T Get(int id);
 
         IEnumerable<T> GetAll();
 
-        void Add(T item);
+        void Save(T item);
 
-        void Update(T item);
-
-        void Remove(int id);
+        void Delete(int id);
     }
 }
