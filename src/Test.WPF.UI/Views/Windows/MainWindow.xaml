@@ -1,0 +1,36 @@
+﻿<Window x:Class="Test.WPF.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Test.WPF.UI"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Orientation="Vertical">
+            <TextBlock Text="Пользователи:"></TextBlock>
+            <DataGrid Height="350" AutoGenerateColumns="False" IsReadOnly="True"
+                      ItemsSource="{Binding Users}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}"/>
+                    <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}"/>
+                    <DataGridTextColumn Header="Отчество" Binding="{Binding MiddleName}"/>
+                    <DataGridTextColumn Header="Логин" Binding="{Binding Login}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button Content="Добавить"></Button>
+            <Button Content="Изменить"></Button>
+            <Button Content="Удалить"></Button>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Orientation="Vertical">
+            <TextBlock Text="Возможные действия:"></TextBlock>
+            <Button Content="Изменить права доступа"></Button>
+        </StackPanel>
+    </Grid>
+</Window>

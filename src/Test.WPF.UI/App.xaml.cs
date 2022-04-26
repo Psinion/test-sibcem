@@ -26,5 +26,7 @@ namespace Test.WPF.UI
 
             NHibernateHelper.Configure(configuration);
         }
+
+        
     }
 }
