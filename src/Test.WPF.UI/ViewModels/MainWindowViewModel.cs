@@ -13,6 +13,7 @@ namespace Test.WPF.UI.ViewModels
     public class MainWindowViewModel : BaseViewModel
     {
         private readonly IDialogService userEditorDialog;
+        private readonly IDialogService userPrivilegesDialog;
 
         private UnitOfWork unitOfWork;
         private UsersRepository usersRepository;
@@ -32,12 +33,15 @@ namespace Test.WPF.UI.ViewModels
         public ICommand ChangeUserCommand { get; }
         public ICommand RemoveUserCommand { get; }
 
+        public ICommand ChangeUserPrivilegesCommand { get; }
+
         #endregion
 
 
         public MainWindowViewModel()
         {
-            this.userEditorDialog = new UserEditorDialogService();
+            userEditorDialog = new UserEditorDialogService();
+            userPrivilegesDialog = new UserPrivilegesEditorDialogService();
 
             unitOfWork = new UnitOfWork();
             usersRepository = new UsersRepository(unitOfWork);
@@ -45,6 +49,7 @@ namespace Test.WPF.UI.ViewModels
             AddUserCommand = new RelayCommand(OnAddUser);
             ChangeUserCommand = new RelayCommand(OnChangeUser, CanChangeUser);
             RemoveUserCommand = new RelayCommand(OnRemoveUser, CanRemoveUser);
+            ChangeUserPrivilegesCommand = new RelayCommand(OnChangeUserPrivileges, CanChangeUserPrivileges);
 
             Refresh();
         }
@@ -67,7 +72,7 @@ namespace Test.WPF.UI.ViewModels
 
         private bool CanChangeUser(object obj)
         {
-            return obj is User || SelectedUser != null;
+            return obj is User;
         }
 
         private void OnChangeUser(object obj)
@@ -84,7 +89,7 @@ namespace Test.WPF.UI.ViewModels
 
         private bool CanRemoveUser(object obj)
         {
-            return obj is User || SelectedUser != null;
+            return obj is User;
         }
 
         private void OnRemoveUser(object obj)
@@ -96,6 +101,23 @@ namespace Test.WPF.UI.ViewModels
                 unitOfWork.CommitTransaction();
 
                 Refresh();
+            }
+        }
+
+        private bool CanChangeUserPrivileges(object obj)
+        {
+            return obj is User;
+        }
+
+        private void OnChangeUserPrivileges(object obj)
+        {
+            if (obj is User user && userPrivilegesDialog.Edit(user))
+            {
+                /*unitOfWork.BeginTransaction();
+                usersRepository.Save(user);
+                unitOfWork.CommitTransaction();
+
+                Refresh();*/
             }
         }
 

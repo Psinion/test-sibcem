@@ -42,7 +42,9 @@
 
         <StackPanel Grid.Column="1" Orientation="Vertical">
             <TextBlock Text="Возможные действия:"></TextBlock>
-            <Button Content="Изменить права доступа"></Button>
+            <Button Content="Изменить права доступа"
+                    Command="{Binding ChangeUserPrivilegesCommand}"
+                    CommandParameter="{Binding SelectedUser}"></Button>
         </StackPanel>
     </Grid>
 </Window>

@@ -78,11 +78,16 @@
     <Compile Include="Services\Base\IDialogService.cs" />
     <Compile Include="Services\DialogResult.cs" />
     <Compile Include="Services\UserEditorDialogService.cs" />
+    <Compile Include="Services\UserPrivilegesEditorDialogService.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\UserEditorViewModel.cs" />
+    <Compile Include="ViewModels\UserPrivilegesViewModel.cs" />
     <Compile Include="Views\Windows\UserEditorWindow.xaml.cs">
       <DependentUpon>UserEditorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\UserPrivilegesWindow.xaml.cs">
+      <DependentUpon>UserPrivilegesWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -106,6 +111,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\Windows\UserEditorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\UserPrivilegesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
