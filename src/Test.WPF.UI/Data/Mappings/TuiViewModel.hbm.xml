@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Test.WPF.UI"
+                   namespace="Test.WPF.UI.Data.Models">
+  <class name="TuiViewModel" table="TUI_VIEW_MODELS">
+    <id name="Id" column="ID">
+      <generator class="increment"/>
+    </id>
+    <property name="Name" column="NAME"/>
+    <many-to-one name="Parent" column="PARENT" class="TuiViewModel"/>
+    <set name="Children" batch-size="25" inverse="true">
+      <key column="PARENT"/>
+      <one-to-many class="TuiViewModel"/>
+    </set>
+  </class>
+</hibernate-mapping>

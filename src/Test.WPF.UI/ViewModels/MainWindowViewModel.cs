@@ -15,8 +15,8 @@ namespace Test.WPF.UI.ViewModels
         private readonly IDialogService userEditorDialog;
         private readonly IDialogService userPrivilegesDialog;
 
-        private UnitOfWork unitOfWork;
-        private UsersRepository usersRepository;
+        private IUnitOfWork unitOfWork;
+        private IUsersRepository usersRepository;
 
         private ObservableCollection<User> users = 
             new ObservableCollection<User>();

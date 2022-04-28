@@ -17,7 +17,7 @@ namespace Test.WPF.UI.Data.Repositories
 
         #region Constructors
 
-        public Repository(UnitOfWork unitOfWork)
+        public Repository(IUnitOfWork unitOfWork)
         {
             UnitOfWork = unitOfWork;
         }

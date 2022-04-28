@@ -6,7 +6,7 @@ namespace Test.WPF.UI.Data.Repositories
 {
     public class UsersRepository : Repository<User>, IUsersRepository
     {
-        public UsersRepository(UnitOfWork unitOfWork) : base(unitOfWork)
+        public UsersRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
     }

@@ -75,6 +75,9 @@
     </ApplicationDefinition>
     <Compile Include="Commands\Base\BaseCommand.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="Data\Models\TuiViewModel.cs" />
+    <Compile Include="Data\Repositories\Base\ITuiViewModelsRepository.cs" />
+    <Compile Include="Data\Repositories\TuiViewModelsRepository.cs" />
     <Compile Include="Services\Base\IDialogService.cs" />
     <Compile Include="Services\DialogResult.cs" />
     <Compile Include="Services\UserEditorDialogService.cs" />
@@ -157,6 +160,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Data\Mappings\TuiViewModel.hbm.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

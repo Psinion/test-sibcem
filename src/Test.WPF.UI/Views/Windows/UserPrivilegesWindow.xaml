@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:Test.WPF.UI.ViewModels"
         xmlns:local="clr-namespace:Test.WPF.UI.Views.Windows"
+        xmlns:models="clr-namespace:Test.WPF.UI.Data.Models"
         FontSize="14"
         mc:Ignorable="d"
         Title="UserPrivilegesWindow" Height="450" Width="800">
@@ -29,7 +30,13 @@
         </UniformGrid>
         <StackPanel DockPanel.Dock="Left" Margin="10">
             <TextBlock Text="Модели:"></TextBlock>
-            <ListBox Height="300" Width="200"></ListBox>
+            <TreeView Height="300" Width="200" ItemsSource="{Binding RootViewModels}">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type models:TuiViewModel}" ItemsSource="{Binding Children}">
+                        <TextBlock Text="{Binding Name}"></TextBlock>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
         </StackPanel>
         <Grid Margin="5" DockPanel.Dock="Right">
             <Grid.ColumnDefinitions>
