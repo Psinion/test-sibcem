@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:vm="clr-namespace:Test.WPF.UI.ViewModels"
         xmlns:local="clr-namespace:Test.WPF.UI.Views.Windows"
         xmlns:models="clr-namespace:Test.WPF.UI.Data.Models"
@@ -13,9 +14,7 @@
         <vm:UserPrivilegesViewModel/>
     </Window.DataContext>
     <DockPanel>
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="10, 5, 10, 0">
-            <TextBlock DockPanel.Dock="Top" Text="Редактирование прав пользователя:"></TextBlock>
-        </StackPanel>
+        <!-- Buttons -->
         <UniformGrid DockPanel.Dock="Bottom" Rows="1" HorizontalAlignment="Left" Margin="5">
             <UniformGrid.Resources>
                 <Style TargetType="Button">
@@ -28,9 +27,20 @@
             <Button Content="Закрыть" Command="{Binding CancelCommand}"
                     IsCancel="True"></Button>
         </UniformGrid>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="10, 5, 10, 0">
+            <TextBlock DockPanel.Dock="Top" Text="Редактирование прав пользователя:"></TextBlock>
+        </StackPanel>
+        <!-- View Models TreeView -->
         <StackPanel DockPanel.Dock="Left" Margin="10">
             <TextBlock Text="Модели:"></TextBlock>
-            <TreeView Height="300" Width="200" ItemsSource="{Binding RootViewModels}">
+            <TreeView Name="ViewModelTreeView" Height="300" Width="200" 
+                      ItemsSource="{Binding RootViewModels}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectedItemChanged">
+                        <i:InvokeCommandAction Command="{Binding SelectViewModelCommand}"
+                                               CommandParameter="{Binding ElementName=ViewModelTreeView, Path=SelectedItem}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
                 <TreeView.ItemTemplate>
                     <HierarchicalDataTemplate DataType="{x:Type models:TuiViewModel}" ItemsSource="{Binding Children}">
                         <TextBlock Text="{Binding Name}"></TextBlock>
