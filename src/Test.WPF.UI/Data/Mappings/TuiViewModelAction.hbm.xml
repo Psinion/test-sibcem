@@ -2,17 +2,16 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
                    assembly="Test.WPF.UI"
                    namespace="Test.WPF.UI.Data.Models">
-  <class name="User" table="USERS">
+  <class name="TuiViewModelAction" table="TUI_VIEW_MODEL_ACTIONS">
     <id name="Id" column="ID">
       <generator class="increment"/>
     </id>
-    <property name="Login" column="LOGIN"/>
-    <property name="LastName" column="LAST_NAME"/>
-    <property name="FirstName" column="FIRST_NAME"/>
-    <property name="MiddleName" column="MIDDLE_NAME"/>
+    <many-to-one name="ViewModel" class="TuiViewModel" column="VIEW_MODEL"/>
+    <property name="Name" column="NAME"/>
+    <property name="Note" column="NOTE"/>
     <bag name="Permissions" inverse="true">
-      <key column="USER_ID"></key>
-      <one-to-many class="TuiPermission"></one-to-many>
+      <key column="View_Model_Action"/>
+      <one-to-many class="TuiPermission"/>
     </bag>
   </class>
 </hibernate-mapping>

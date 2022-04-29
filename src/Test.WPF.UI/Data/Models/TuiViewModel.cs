@@ -10,11 +10,14 @@ namespace Test.WPF.UI.Data.Models
 
         public virtual TuiViewModel Parent { get; set; }
 
-        public virtual ICollection<TuiViewModel> Children { get; set; }
+        public virtual IList<TuiViewModel> Children { get; set; }
+
+        public virtual IList<TuiViewModelAction> Actions { get; set; }
 
         public TuiViewModel()
         {
             Children = new List<TuiViewModel>();
+            Actions = new List<TuiViewModelAction>();
         }
     }
 }

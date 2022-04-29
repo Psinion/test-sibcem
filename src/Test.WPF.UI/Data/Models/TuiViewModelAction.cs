@@ -4,17 +4,17 @@ using Test.WPF.UI.Data.Models.Base;
 
 namespace Test.WPF.UI.Data.Models
 {
-    public class User : Entity
+    public class TuiViewModelAction : Entity
     {
-        public virtual string Login { get; set; }
+        public virtual TuiViewModel ViewModel { get; set; }
 
-        public virtual string LastName { get; set; }
-        public virtual string FirstName { get; set; }
-        public virtual string MiddleName { get; set; }
+        public virtual string Name { get; set; }
+
+        public virtual string Note { get; set; }
 
         public virtual IList<TuiPermission> Permissions { get; set; }
 
-        public User()
+        public TuiViewModelAction()
         {
             Permissions = new List<TuiPermission>();
         }

@@ -78,8 +78,14 @@
     </ApplicationDefinition>
     <Compile Include="Commands\Base\BaseCommand.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="Data\Models\TuiPermission.cs" />
     <Compile Include="Data\Models\TuiViewModel.cs" />
+    <Compile Include="Data\Models\TuiViewModelAction.cs" />
+    <Compile Include="Data\Repositories\Base\ITuiPermissionRepository.cs" />
+    <Compile Include="Data\Repositories\Base\ITuiViewModelActionsRepository.cs" />
     <Compile Include="Data\Repositories\Base\ITuiViewModelsRepository.cs" />
+    <Compile Include="Data\Repositories\TuiPermissionRepository.cs" />
+    <Compile Include="Data\Repositories\TuiViewModelRepository.cs" />
     <Compile Include="Data\Repositories\TuiViewModelsRepository.cs" />
     <Compile Include="Services\Base\IDialogService.cs" />
     <Compile Include="Services\DialogResult.cs" />
@@ -164,7 +170,17 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Data\Mappings\TuiViewModelAction.hbm.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Data\Mappings\TuiViewModel.hbm.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Data\Mappings\TuiPermission.hbm.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>

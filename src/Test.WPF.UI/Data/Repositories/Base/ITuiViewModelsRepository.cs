@@ -5,6 +5,6 @@ namespace Test.WPF.UI.Data.Repositories.Base
 {
     public interface ITuiViewModelsRepository : IRepository<TuiViewModel>
     {
-        IEnumerable<TuiViewModel> GetRootViewModels();
+        IList<TuiViewModel> GetRootViewModels();
     }
 }

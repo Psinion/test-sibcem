@@ -12,7 +12,7 @@ namespace Test.WPF.UI.Data.Repositories
         {
         }
 
-        public IEnumerable<TuiViewModel> GetRootViewModels()
+        public IList<TuiViewModel> GetRootViewModels()
         {
             return Session.CreateCriteria<TuiViewModel>()
                 .Add(Restrictions.Eq("Parent", null))

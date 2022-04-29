@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Input;
+using Remotion.Linq.Collections;
 using Test.WPF.UI.Commands;
 using Test.WPF.UI.Data.Models;
 using Test.WPF.UI.Data.Repositories;
@@ -19,8 +20,9 @@ namespace Test.WPF.UI.ViewModels
         private IEnumerable<TuiViewModel> rootViewModels;
         private TuiViewModel selectedViewModel;
 
-        private IUnitOfWork unitOfWork;
-        private ITuiViewModelsRepository tuiViewModelsRepository;
+        private readonly IUnitOfWork unitOfWork;
+        private readonly ITuiViewModelsRepository tuiViewModelsRepository;
+        private readonly ITuiViewModelActionsRepository tuiViewModelActionsRepository;
 
         #endregion
 
@@ -32,7 +34,6 @@ namespace Test.WPF.UI.ViewModels
             get => selectedViewModel;
             set => Set(ref selectedViewModel, value);
         }
-
 
         #endregion
 
@@ -57,6 +58,7 @@ namespace Test.WPF.UI.ViewModels
             this.user = user;
             unitOfWork = new UnitOfWork();
             tuiViewModelsRepository = new TuiViewModelsRepository(unitOfWork);
+            tuiViewModelActionsRepository = new TuiViewModelRepository(unitOfWork);
 
             SelectViewModelCommand = new RelayCommand(OnSelectViewModel);
 
