@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using NHibernate.Linq;
 using Test.WPF.UI.Data.Models;
 using Test.WPF.UI.Data.Repositories.Base;
 
@@ -23,6 +26,24 @@ namespace Test.WPF.UI.Data.Repositories
                 .SetInt32(0, userId)
                 .SetInt32(1, viewModelId)
                 .List<TuiPermission>();
+        }
+
+        public void RemoveAllPermissions(int userId, int viewModelId)
+        {
+            IQueryable<TuiPermission> permissions = Session.Query<TuiPermission>()
+                .Where(p => p.User.Id == userId && p.ViewModelAction.ViewModel.Id == viewModelId);
+            foreach (var permission in permissions)
+            {
+                Delete(permission);
+            }
+        }
+
+        public void SavePermissions(ICollection<TuiPermission> permissions)
+        {
+            foreach (var permission in permissions)
+            {
+                Session.Save(permission);
+            }
         }
     }
 }

@@ -6,8 +6,8 @@
     <id name="Id" column="ID">
       <generator class="increment"/>
     </id>
-    <many-to-one name="ViewModelAction" column="VIEW_MODEL_ACTION" class="TuiViewModelAction" cascade="save-update"/>
-    <many-to-one name="User" column="USER_ID" class="User" cascade="save-update"/>
+    <many-to-one name="ViewModelAction" column="VIEW_MODEL_ACTION" class="TuiViewModelAction"/>
+    <many-to-one name="User" column="USER_ID" class="User"/>
     <property name="DateExpire" column="DATE_EXPIRE"/>
   </class>
 </hibernate-mapping>

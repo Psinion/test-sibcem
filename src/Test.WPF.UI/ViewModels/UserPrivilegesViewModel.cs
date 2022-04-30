@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
+using NHibernate;
 using NHibernate.Type;
 using Test.WPF.UI.Commands;
 using Test.WPF.UI.Data.Models;
@@ -31,7 +33,6 @@ namespace Test.WPF.UI.ViewModels
         private bool changed;
 
         private readonly IUnitOfWork unitOfWork;
-        private readonly IUsersRepository usersRepository;
         private readonly ITuiViewModelsRepository tuiViewModelsRepository;
         private readonly ITuiViewModelActionsRepository tuiViewModelActionsRepository;
         private readonly ITuiPermissionsRepository tuiPermissionsRepository;
@@ -86,7 +87,6 @@ namespace Test.WPF.UI.ViewModels
         {
             this.user = user;
             unitOfWork = new UnitOfWork();
-            usersRepository = new UsersRepository(unitOfWork);
             tuiViewModelsRepository = new TuiViewModelsRepository(unitOfWork);
             tuiViewModelActionsRepository = new TuiViewModelActionsRepository(unitOfWork);
             tuiPermissionsRepository = new TuiPermissionsRepository(unitOfWork);
@@ -172,11 +172,21 @@ namespace Test.WPF.UI.ViewModels
 
         private void OnProceed(object obj)
         {
-            user.Permissions = Permissions;
+            try
+            {
+                unitOfWork.BeginTransaction();
+                tuiPermissionsRepository.RemoveAllPermissions(user.Id, selectedViewModel.Id);
+                unitOfWork.CommitTransaction();
 
-            unitOfWork.BeginTransaction();
-            usersRepository.Save(user);
-            unitOfWork.CommitTransaction();
+                unitOfWork.BeginTransaction();
+                tuiPermissionsRepository.SavePermissions(Permissions);
+                unitOfWork.CommitTransaction();
+            }
+            catch (HibernateException ex)
+            {
+                unitOfWork.RollbackTransaction();
+                MessageBox.Show(ex.Message);
+            }
         }
 
         #endregion

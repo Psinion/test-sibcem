@@ -1,5 +1,7 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
+using NHibernate;
 using Test.WPF.UI.Commands;
 using Test.WPF.UI.Data.Models;
 using Test.WPF.UI.Data.Repositories;
@@ -96,9 +98,17 @@ namespace Test.WPF.UI.ViewModels
         {
             if (obj is User user)
             {
-                unitOfWork.BeginTransaction();
-                usersRepository.Delete(user);
-                unitOfWork.CommitTransaction();
+                try
+                {
+                    unitOfWork.BeginTransaction();
+                    usersRepository.Delete(user);
+                    unitOfWork.CommitTransaction();
+                }
+                catch (HibernateException ex)
+                {
+                    unitOfWork.RollbackTransaction();
+                    MessageBox.Show(ex.Message);
+                }
 
                 Refresh();
             }
@@ -111,13 +121,14 @@ namespace Test.WPF.UI.ViewModels
 
         private void OnChangeUserPrivileges(object obj)
         {
-            if (obj is User user && userPrivilegesDialog.Edit(user))
+            if (obj is User user)
             {
-                /*unitOfWork.BeginTransaction();
-                usersRepository.Save(user);
-                unitOfWork.CommitTransaction();
+                userPrivilegesDialog.Edit(user);
 
-                Refresh();*/
+                unitOfWork = new UnitOfWork();
+                usersRepository = new UsersRepository(unitOfWork);
+
+                Refresh();
             }
         }
 
@@ -128,12 +139,10 @@ namespace Test.WPF.UI.ViewModels
         private void Refresh()
         {
             Users.Clear();
-            unitOfWork.BeginTransaction();
             foreach (var user in usersRepository.GetAll())
             {
                 Users.Add(user);
             }
-            unitOfWork.CommitTransaction();
         }
 
         #endregion
