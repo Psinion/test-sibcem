@@ -62,8 +62,12 @@ namespace Test.WPF.UI.ViewModels
         {
             User newUser = new User();
 
+            unitOfWork.CloseSession();
+
             if (userEditorDialog.Edit(newUser))
             {
+                unitOfWork.OpenSession();
+
                 unitOfWork.BeginTransaction();
                 usersRepository.Save(newUser);
                 unitOfWork.CommitTransaction();
@@ -121,12 +125,13 @@ namespace Test.WPF.UI.ViewModels
 
         private void OnChangeUserPrivileges(object obj)
         {
+            unitOfWork.CloseSession();
+
             if (obj is User user)
             {
                 userPrivilegesDialog.Edit(user);
 
-                unitOfWork = new UnitOfWork();
-                usersRepository = new UsersRepository(unitOfWork);
+                unitOfWork.OpenSession();
 
                 Refresh();
             }

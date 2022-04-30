@@ -13,12 +13,19 @@
         <vm:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
+        <Grid.Resources>
+            <Style TargetType="Button">
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="Padding" Value="5"></Setter>
+            </Style>
+        </Grid.Resources>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition Width="200"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Orientation="Vertical">
+        <StackPanel Margin="5" Grid.Column="0" Orientation="Vertical">
             <TextBlock Text="Пользователи:"></TextBlock>
             <DataGrid Height="350" AutoGenerateColumns="False" IsReadOnly="True"
                       ItemsSource="{Binding Users}"
@@ -40,8 +47,8 @@
                     CommandParameter="{Binding SelectedUser}"/>
         </StackPanel>
 
-        <StackPanel Grid.Column="1" Orientation="Vertical">
-            <TextBlock Text="Возможные действия:"></TextBlock>
+        <StackPanel Margin="5" Grid.Column="1" Orientation="Vertical">
+            <TextBlock Margin="5, 0" Text="Возможные действия:"></TextBlock>
             <Button Content="Изменить права доступа"
                     Command="{Binding ChangeUserPrivilegesCommand}"
                     CommandParameter="{Binding SelectedUser}"></Button>

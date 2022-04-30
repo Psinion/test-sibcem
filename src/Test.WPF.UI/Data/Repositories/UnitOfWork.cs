@@ -10,7 +10,7 @@ namespace Test.WPF.UI.Data.Repositories.Base
 
         public UnitOfWork()
         {
-            Session = NHibernateHelper.OpenSession();
+            OpenSession();
         }
 
         public UnitOfWork(ISession session)
@@ -39,6 +39,18 @@ namespace Test.WPF.UI.Data.Repositories.Base
             CloseSession();
         }
 
+        public void OpenSession()
+        {
+            Session = NHibernateHelper.OpenSession();
+        }
+
+        public void CloseSession()
+        {
+            Session.Close();
+            Session.Dispose();
+            Session = null;
+        }
+
         public void Dispose()
         {
             if (Transaction != null)
@@ -61,13 +73,6 @@ namespace Test.WPF.UI.Data.Repositories.Base
         {
             Transaction.Dispose();
             Transaction = null;
-        }
-
-        private void CloseSession()
-        {
-            Session.Close();
-            Session.Dispose();
-            Session = null;
         }
 
         #endregion

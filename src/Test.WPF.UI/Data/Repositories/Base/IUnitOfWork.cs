@@ -12,5 +12,9 @@ namespace Test.WPF.UI.Data.Repositories.Base
         void CommitTransaction();
 
         void RollbackTransaction();
+
+        void OpenSession();
+
+        void CloseSession();
     }
 }
