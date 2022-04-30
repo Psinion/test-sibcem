@@ -39,16 +39,16 @@ CREATE TABLE TUI_PERMISSIONS
     DATE_EXPIRE DATE
 );
 
-INSERT INTO USERS(ID, LOGIN, LAST_NAME, FIRST_NAME, MIDDLE_NAME) VALUES (0, 'Sidorov', 'Сидоров', 'Иван', 'Иванович');
-INSERT INTO USERS(ID, LOGIN, LAST_NAME, FIRST_NAME, MIDDLE_NAME) VALUES (1, 'Kornilov', 'Корнилов', 'Алексей', 'Альбертович');
-INSERT INTO USERS(ID, LOGIN, LAST_NAME, FIRST_NAME, MIDDLE_NAME) VALUES (2, 'Morozova', 'Морозова', 'Инна', 'Платоновна');
+INSERT INTO USERS(ID, LOGIN, LAST_NAME, FIRST_NAME, MIDDLE_NAME) VALUES (1, 'Sidorov', 'Сидоров', 'Иван', 'Иванович');
+INSERT INTO USERS(ID, LOGIN, LAST_NAME, FIRST_NAME, MIDDLE_NAME) VALUES (2, 'Kornilov', 'Корнилов', 'Алексей', 'Альбертович');
+INSERT INTO USERS(ID, LOGIN, LAST_NAME, FIRST_NAME, MIDDLE_NAME) VALUES (3, 'Morozova', 'Морозова', 'Инна', 'Платоновна');
 
-INSERT INTO TUI_VIEW_MODELS(ID, PARENT, "NAME") VALUES (0, null, 'Main');
-INSERT INTO TUI_VIEW_MODELS(ID, PARENT, "NAME") VALUES (1, 0, 'User');
-INSERT INTO TUI_VIEW_MODELS(ID, PARENT, "NAME") VALUES (2, 0, 'Options');
+INSERT INTO TUI_VIEW_MODELS(ID, PARENT, "NAME") VALUES (1, null, 'Main');
+INSERT INTO TUI_VIEW_MODELS(ID, PARENT, "NAME") VALUES (2, 1, 'User');
+INSERT INTO TUI_VIEW_MODELS(ID, PARENT, "NAME") VALUES (3, 1, 'Options');
 
-INSERT INTO TUI_VIEW_MODEL_ACTIONS(ID, VIEW_MODEL, "NAME", NOTE) VALUES (0, 1, 'Открытие', 'Возможность открытия');
-INSERT INTO TUI_VIEW_MODEL_ACTIONS(ID, VIEW_MODEL, "NAME", NOTE) VALUES (1, 1, 'Изменение', 'Возможность изменения');
-INSERT INTO TUI_VIEW_MODEL_ACTIONS(ID, VIEW_MODEL, "NAME", NOTE) VALUES (2, 1, 'Печать', 'Возможность печати');
-INSERT INTO TUI_VIEW_MODEL_ACTIONS(ID, VIEW_MODEL, "NAME", NOTE) VALUES (3, 2, 'Открытие', 'Возможность открытия');
-INSERT INTO TUI_VIEW_MODEL_ACTIONS(ID, VIEW_MODEL, "NAME", NOTE) VALUES (4, 2, 'Изменение', 'Возможность изменения');
+INSERT INTO TUI_VIEW_MODEL_ACTIONS(ID, VIEW_MODEL, "NAME", NOTE) VALUES (1, 2, 'Открытие', 'Возможность открытия');
+INSERT INTO TUI_VIEW_MODEL_ACTIONS(ID, VIEW_MODEL, "NAME", NOTE) VALUES (2, 2, 'Изменение', 'Возможность изменения');
+INSERT INTO TUI_VIEW_MODEL_ACTIONS(ID, VIEW_MODEL, "NAME", NOTE) VALUES (3, 2, 'Печать', 'Возможность печати');
+INSERT INTO TUI_VIEW_MODEL_ACTIONS(ID, VIEW_MODEL, "NAME", NOTE) VALUES (4, 3, 'Открытие', 'Возможность открытия');
+INSERT INTO TUI_VIEW_MODEL_ACTIONS(ID, VIEW_MODEL, "NAME", NOTE) VALUES (5, 3, 'Изменение', 'Возможность изменения');

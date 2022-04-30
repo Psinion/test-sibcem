@@ -10,7 +10,7 @@
     <property name="LastName" column="LAST_NAME"/>
     <property name="FirstName" column="FIRST_NAME"/>
     <property name="MiddleName" column="MIDDLE_NAME"/>
-    <bag name="Permissions" inverse="true">
+    <bag name="Permissions" cascade="all" inverse="true">
       <key column="USER_ID"></key>
       <one-to-many class="TuiPermission"></one-to-many>
     </bag>

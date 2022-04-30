@@ -81,11 +81,11 @@
     <Compile Include="Data\Models\TuiPermission.cs" />
     <Compile Include="Data\Models\TuiViewModel.cs" />
     <Compile Include="Data\Models\TuiViewModelAction.cs" />
-    <Compile Include="Data\Repositories\Base\ITuiPermissionRepository.cs" />
+    <Compile Include="Data\Repositories\Base\ITuiPermissionsRepository.cs" />
     <Compile Include="Data\Repositories\Base\ITuiViewModelActionsRepository.cs" />
     <Compile Include="Data\Repositories\Base\ITuiViewModelsRepository.cs" />
-    <Compile Include="Data\Repositories\TuiPermissionRepository.cs" />
-    <Compile Include="Data\Repositories\TuiViewModelRepository.cs" />
+    <Compile Include="Data\Repositories\TuiPermissionsRepository.cs" />
+    <Compile Include="Data\Repositories\TuiViewModelActionsRepository.cs" />
     <Compile Include="Data\Repositories\TuiViewModelsRepository.cs" />
     <Compile Include="Services\Base\IDialogService.cs" />
     <Compile Include="Services\DialogResult.cs" />

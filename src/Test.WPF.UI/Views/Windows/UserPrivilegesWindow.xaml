@@ -9,24 +9,39 @@
         xmlns:models="clr-namespace:Test.WPF.UI.Data.Models"
         FontSize="14"
         mc:Ignorable="d"
-        Title="UserPrivilegesWindow" Height="450" Width="800">
+        Title="UserPrivilegesWindow" Height="475" Width="900">
     <Window.DataContext>
         <vm:UserPrivilegesViewModel/>
     </Window.DataContext>
     <DockPanel>
         <!-- Buttons -->
-        <UniformGrid DockPanel.Dock="Bottom" Rows="1" HorizontalAlignment="Left" Margin="5">
-            <UniformGrid.Resources>
+        <Grid DockPanel.Dock="Bottom"  Margin="5">
+            <Grid.Resources>
                 <Style TargetType="Button">
                     <Setter Property="Margin" Value="3"></Setter>
                     <Setter Property="Padding" Value="15, 5"></Setter>
                 </Style>
-            </UniformGrid.Resources>
+            </Grid.Resources>
 
-            <Button Content="Принять" Command="{Binding ProceedCommand}"></Button>
-            <Button Content="Закрыть" Command="{Binding CancelCommand}"
-                    IsCancel="True"></Button>
-        </UniformGrid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" HorizontalAlignment="Right" Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="Дата истечения: "/>
+                <DatePicker IsDropDownOpen="True" SelectedDateFormat="Short" 
+                            IsEnabled="{Binding ElementName=DatePickerCheckbox, Path=IsChecked}"
+                            SelectedDate="{Binding SelectedDateExpire}"/>
+                <CheckBox Name="DatePickerCheckbox" VerticalAlignment="Center" Content="Ограничение времени"
+                          IsChecked="{Binding DateExpireToggle}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" HorizontalAlignment="Left" Orientation="Horizontal" >
+                <Button Content="Закрыть" Command="{Binding CancelCommand}"
+                        IsCancel="True"></Button>
+            </StackPanel>
+        </Grid>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="10, 5, 10, 0">
             <TextBlock DockPanel.Dock="Top" Text="Редактирование прав пользователя:"></TextBlock>
         </StackPanel>
@@ -51,12 +66,20 @@
         <Grid Margin="5" DockPanel.Dock="Right">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"></ColumnDefinition>
-                <ColumnDefinition Width="150"></ColumnDefinition>
                 <ColumnDefinition Width="200"></ColumnDefinition>
+                <ColumnDefinition Width="250"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Margin="5">
                 <TextBlock Text="Доступные права:"></TextBlock>
-                <ListBox Height="300"></ListBox>
+                <ListBox Height="300" 
+                         ItemsSource="{Binding Actions}"
+                         SelectedItem="{Binding SelectedAction}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" ToolTip="{Binding Note}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </StackPanel>
             <StackPanel Grid.Column="1" Margin="5" VerticalAlignment="Center">
                 <StackPanel.Resources>
@@ -65,12 +88,25 @@
                         <Setter Property="Padding" Value="15, 5"></Setter>
                     </Style>
                 </StackPanel.Resources>
-                <Button Content="Выдать права"/>
-                <Button Content="Забрать права"/>
+                <Button Content="Выдать права" 
+                        Command="{Binding AddPermissionCommand}"
+                        CommandParameter="{Binding SelectedAction}"/>
+                <Button Content="Забрать права"
+                        Command="{Binding RemovePermissionCommand}"
+                        CommandParameter="{Binding SelectedPermission}"/>
+                <Button Content="Применить изменения"
+                        Command="{Binding ProceedCommand}"/>
             </StackPanel>
             <StackPanel Grid.Column="2" Margin="5">
                 <TextBlock Text="Выданные права:"></TextBlock>
-                <ListBox Height="300"></ListBox>
+                <DataGrid Height="300" AutoGenerateColumns="False" IsReadOnly="True" 
+                          ItemsSource="{Binding Permissions}"
+                          SelectedItem="{Binding SelectedPermission}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Название" Binding="{Binding ViewModelAction.Name}"/>
+                        <DataGridTextColumn Header="Дата истечения" Binding="{Binding DateExpire, StringFormat={}{0:dd/MM/yyyy}}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </StackPanel>
         </Grid>
         

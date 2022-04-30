@@ -12,9 +12,9 @@
       <key column="PARENT"/>
       <one-to-many class="TuiViewModel"/>
     </bag>
-    <bag name="Actions" inverse="true">
+    <bag name="Actions">
       <key column="VIEW_MODEL"/>
-      <one-to-many class="TuiViewModel"/>
+      <one-to-many class="TuiViewModelAction"/>
     </bag>
   </class>
 </hibernate-mapping>
