@@ -2,7 +2,7 @@ SET SQL DIALECT 3;
 
 SET NAMES UTF8;
 
-CREATE DATABASE 'E:\MyProjects\Firebird\Data\test.fdb'
+CREATE DATABASE 'E:\MyProjects\Firebird\Data\mosalev-test-db.fdb'
 USER 'SYSDBA' PASSWORD 'masterkey'
 PAGE_SIZE 4096
 DEFAULT CHARACTER SET UTF8;
