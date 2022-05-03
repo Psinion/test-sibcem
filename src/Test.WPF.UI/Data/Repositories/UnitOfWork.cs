@@ -12,7 +12,6 @@ namespace Test.WPF.UI.Data.Repositories
         private ITuiViewModelActionsRepository tuiViewModelActionsRepository;
         private ITuiPermissionsRepository tuiPermissionsRepository;
 
-
         public ISession Session { get; protected set; }
         public IUsersRepository UsersRepository => usersRepository ?? (usersRepository = new UsersRepository(this));
         public ITuiViewModelsRepository TuiViewModelsRepository => tuiViewModelsRepository ?? (tuiViewModelsRepository = new TuiViewModelsRepository(this));

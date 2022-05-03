@@ -18,6 +18,7 @@ namespace Test.WPF.UI.ViewModels
         private readonly IDialogService userPrivilegesDialog;
 
         private readonly IUnitOfWork unitOfWork;
+        private readonly IUsersRepository usersRepository;
 
         private ObservableCollection<User> users = 
             new ObservableCollection<User>();
@@ -45,6 +46,7 @@ namespace Test.WPF.UI.ViewModels
             userPrivilegesDialog = new UserPrivilegesEditorDialogService();
 
             unitOfWork = new UnitOfWork();
+            usersRepository = unitOfWork.UsersRepository;
 
             AddUserCommand = new RelayCommand(OnAddUser);
             ChangeUserCommand = new RelayCommand(OnChangeUser, CanChangeUser);
@@ -67,7 +69,7 @@ namespace Test.WPF.UI.ViewModels
                 unitOfWork.OpenSession();
 
                 unitOfWork.BeginTransaction();
-                unitOfWork.UsersRepository.Save(newUser);
+                usersRepository.Save(newUser);
                 unitOfWork.CommitTransaction();
                 
                 Refresh();
@@ -88,7 +90,7 @@ namespace Test.WPF.UI.ViewModels
             if (obj is User user && userEditorDialog.Edit(user))
             {
                 unitOfWork.BeginTransaction();
-                unitOfWork.UsersRepository.Save(user);
+                usersRepository.Save(user);
                 unitOfWork.CommitTransaction();
 
                 Refresh();
@@ -107,7 +109,7 @@ namespace Test.WPF.UI.ViewModels
                 try
                 {
                     unitOfWork.BeginTransaction();
-                    unitOfWork.UsersRepository.Delete(user);
+                    usersRepository.Delete(user);
                     unitOfWork.CommitTransaction();
                 }
                 catch (HibernateException ex)
@@ -150,7 +152,7 @@ namespace Test.WPF.UI.ViewModels
         private void Refresh()
         {
             Users.Clear();
-            foreach (var user in unitOfWork.UsersRepository.GetAll())
+            foreach (var user in usersRepository.GetAll())
             {
                 Users.Add(user);
             }

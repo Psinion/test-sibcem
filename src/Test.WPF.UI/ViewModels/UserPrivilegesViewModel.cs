@@ -29,6 +29,9 @@ namespace Test.WPF.UI.ViewModels
         private bool changed;
 
         private readonly IUnitOfWork unitOfWork;
+        private readonly ITuiViewModelsRepository tuiViewModelsRepository;
+        private readonly ITuiViewModelActionsRepository tuiViewModelActionsRepository;
+        private readonly ITuiPermissionsRepository tuiPermissionsRepository;
 
         #endregion
 
@@ -79,7 +82,11 @@ namespace Test.WPF.UI.ViewModels
         public UserPrivilegesViewModel(User user)
         {
             this.user = user;
+
             unitOfWork = new UnitOfWork();
+            tuiViewModelsRepository = unitOfWork.TuiViewModelsRepository;
+            tuiViewModelActionsRepository = unitOfWork.TuiViewModelActionsRepository;
+            tuiPermissionsRepository = unitOfWork.TuiPermissionsRepository;
 
             SelectedDateExpire = DateTime.Now;
             changed = false;
@@ -89,7 +96,7 @@ namespace Test.WPF.UI.ViewModels
             RemovePermissionCommand = new RelayCommand(OnRemovePermission, CanRemovePermission);
             ProceedCommand = new RelayCommand(OnProceed, CanProceed);
 
-            RootViewModels = unitOfWork.TuiViewModelsRepository.GetRootViewModels();
+            RootViewModels = tuiViewModelsRepository.GetRootViewModels();
         }
 
         #endregion
@@ -105,13 +112,13 @@ namespace Test.WPF.UI.ViewModels
                 changed = false;
 
                 Permissions.Clear();
-                foreach (var permission in unitOfWork.TuiPermissionsRepository.GetPermissions(user.Id, viewModel.Id) /*user.Permissions*/)
+                foreach (var permission in tuiPermissionsRepository.GetPermissions(user.Id, viewModel.Id) /*user.Permissions*/)
                 {
                     Permissions.Add(permission);
                 }
 
                 Actions.Clear();
-                foreach (var action in unitOfWork.TuiViewModelActionsRepository.GetFreeActionsOfViewModel(viewModel.Id, user.Id))
+                foreach (var action in tuiViewModelActionsRepository.GetFreeActionsOfViewModel(viewModel.Id, user.Id))
                 {
                     Actions.Add(action);
                 }
@@ -165,11 +172,11 @@ namespace Test.WPF.UI.ViewModels
             try
             {
                 unitOfWork.BeginTransaction();
-                unitOfWork.TuiPermissionsRepository.RemoveAllPermissions(user.Id, selectedViewModel.Id);
+                tuiPermissionsRepository.RemoveAllPermissions(user.Id, selectedViewModel.Id);
                 unitOfWork.CommitTransaction();
 
                 unitOfWork.BeginTransaction();
-                unitOfWork.TuiPermissionsRepository.SavePermissions(Permissions);
+                tuiPermissionsRepository.SavePermissions(Permissions);
                 unitOfWork.CommitTransaction();
             }
             catch (HibernateException ex)
