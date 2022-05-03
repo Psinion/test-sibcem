@@ -7,6 +7,11 @@ namespace Test.WPF.UI.Data.Repositories.Base
     {
         ISession Session { get; }
 
+        IUsersRepository UsersRepository { get; }
+        ITuiViewModelsRepository TuiViewModelsRepository { get; }
+        ITuiViewModelActionsRepository TuiViewModelActionsRepository { get; }
+        ITuiPermissionsRepository TuiPermissionsRepository { get; }
+
         void BeginTransaction();
 
         void CommitTransaction();

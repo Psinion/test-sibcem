@@ -1,12 +1,23 @@
 ﻿using NHibernate;
+using Test.WPF.UI.Data.Repositories.Base;
 
-namespace Test.WPF.UI.Data.Repositories.Base
+namespace Test.WPF.UI.Data.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
-        protected ITransaction Transaction;
+        private ITransaction transaction;
+
+        private IUsersRepository usersRepository;
+        private ITuiViewModelsRepository tuiViewModelsRepository;
+        private ITuiViewModelActionsRepository tuiViewModelActionsRepository;
+        private ITuiPermissionsRepository tuiPermissionsRepository;
+
 
         public ISession Session { get; protected set; }
+        public IUsersRepository UsersRepository => usersRepository ?? (usersRepository = new UsersRepository(this));
+        public ITuiViewModelsRepository TuiViewModelsRepository => tuiViewModelsRepository ?? (tuiViewModelsRepository = new TuiViewModelsRepository(this));
+        public ITuiViewModelActionsRepository TuiViewModelActionsRepository => tuiViewModelActionsRepository ?? (tuiViewModelActionsRepository = new TuiViewModelActionsRepository(this));
+        public ITuiPermissionsRepository TuiPermissionsRepository => tuiPermissionsRepository ?? (tuiPermissionsRepository = new TuiPermissionsRepository(this));
 
         public UnitOfWork()
         {
@@ -22,18 +33,18 @@ namespace Test.WPF.UI.Data.Repositories.Base
 
         public void BeginTransaction()
         {
-            Transaction = Session.BeginTransaction();
+            transaction = Session.BeginTransaction();
         }
 
         public void CommitTransaction()
         {
-            Transaction.Commit(); ;
+            transaction.Commit(); ;
             CloseTransaction(); ;
         }
 
         public void RollbackTransaction()
         {
-            Transaction.Rollback(); ;
+            transaction.Rollback(); ;
 
             CloseTransaction();
             CloseSession();
@@ -53,7 +64,7 @@ namespace Test.WPF.UI.Data.Repositories.Base
 
         public void Dispose()
         {
-            if (Transaction != null)
+            if (transaction != null)
             {
                 CommitTransaction();
             }
@@ -71,8 +82,8 @@ namespace Test.WPF.UI.Data.Repositories.Base
 
         private void CloseTransaction()
         {
-            Transaction.Dispose();
-            Transaction = null;
+            transaction.Dispose();
+            transaction = null;
         }
 
         #endregion

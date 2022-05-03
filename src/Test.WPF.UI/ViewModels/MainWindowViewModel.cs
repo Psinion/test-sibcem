@@ -17,8 +17,7 @@ namespace Test.WPF.UI.ViewModels
         private readonly IDialogService userEditorDialog;
         private readonly IDialogService userPrivilegesDialog;
 
-        private IUnitOfWork unitOfWork;
-        private IUsersRepository usersRepository;
+        private readonly IUnitOfWork unitOfWork;
 
         private ObservableCollection<User> users = 
             new ObservableCollection<User>();
@@ -46,7 +45,6 @@ namespace Test.WPF.UI.ViewModels
             userPrivilegesDialog = new UserPrivilegesEditorDialogService();
 
             unitOfWork = new UnitOfWork();
-            usersRepository = new UsersRepository(unitOfWork);
 
             AddUserCommand = new RelayCommand(OnAddUser);
             ChangeUserCommand = new RelayCommand(OnChangeUser, CanChangeUser);
@@ -69,10 +67,14 @@ namespace Test.WPF.UI.ViewModels
                 unitOfWork.OpenSession();
 
                 unitOfWork.BeginTransaction();
-                usersRepository.Save(newUser);
+                unitOfWork.UsersRepository.Save(newUser);
                 unitOfWork.CommitTransaction();
                 
                 Refresh();
+            }
+            else
+            {
+                unitOfWork.OpenSession();
             }
         }
 
@@ -86,7 +88,7 @@ namespace Test.WPF.UI.ViewModels
             if (obj is User user && userEditorDialog.Edit(user))
             {
                 unitOfWork.BeginTransaction();
-                usersRepository.Save(user);
+                unitOfWork.UsersRepository.Save(user);
                 unitOfWork.CommitTransaction();
 
                 Refresh();
@@ -105,7 +107,7 @@ namespace Test.WPF.UI.ViewModels
                 try
                 {
                     unitOfWork.BeginTransaction();
-                    usersRepository.Delete(user);
+                    unitOfWork.UsersRepository.Delete(user);
                     unitOfWork.CommitTransaction();
                 }
                 catch (HibernateException ex)
@@ -135,6 +137,10 @@ namespace Test.WPF.UI.ViewModels
 
                 Refresh();
             }
+            else
+            {
+                unitOfWork.OpenSession();
+            }
         }
 
         #endregion
@@ -144,7 +150,7 @@ namespace Test.WPF.UI.ViewModels
         private void Refresh()
         {
             Users.Clear();
-            foreach (var user in usersRepository.GetAll())
+            foreach (var user in unitOfWork.UsersRepository.GetAll())
             {
                 Users.Add(user);
             }
